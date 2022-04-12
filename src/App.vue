@@ -1,10 +1,21 @@
 <template>
-  <div id="app">
-    <nav>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </nav>
-    <router-view/>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3">
+        <h3 class="page-header">Dashboard</h3>
+      </div>
+      <div class="col-md-9">
+        <nav>
+          <router-link :to="{ name: 'dashboard' }">Dashboard</router-link> |
+          <router-link to="/about">About</router-link>
+        </nav>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <router-view/>
+      </div>
+    </div>
   </div>
 </template>
 
