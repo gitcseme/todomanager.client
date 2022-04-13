@@ -11,6 +11,20 @@ export default {
                 resolve(response.data);
             })
             .catch(error => reject(error));
-        })
+        });
+    },
+    createTodo(description) {
+        return new Promise((resolve, reject) => {
+            Axios.post(todo_api, { description })
+            .then(response => resolve(response.data))
+            .catch(error => reject(error));
+        });
+    },
+    updateTodo(todo) {
+        return new Promise((resolve, reject) => {
+            Axios.put(todo_api + '/' + todo.id, todo)
+            .then(response => resolve(response.data))
+            .catch(error => reject(error));
+        });
     }
 }

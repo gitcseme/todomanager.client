@@ -62,6 +62,7 @@ export default {
   },
   methods: {
     onSubmit() {
+      console.log('signin-submit: ', this);
       this.$validator.validateAll().then(result => {
         if (result) {
           AccountService.signin(this.loginModel)
