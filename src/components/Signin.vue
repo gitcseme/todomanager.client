@@ -47,6 +47,8 @@
 </template>
 
 <script>
+import AccountService from '@/services/AccountService';
+
 export default {
   name: 'Signin',
   data () {
@@ -62,7 +64,12 @@ export default {
     onSubmit() {
       this.$validator.validateAll().then(result => {
         if (result) {
-          console.log('Success!')
+          AccountService.signin(this.loginModel)
+          .then(response => {
+            this.$router.push('/');
+          }).catch(error => {
+            console.log('login error: ', error);
+          });
         }
         else {
           console.log('Error!', this.errors);
