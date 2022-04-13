@@ -5,6 +5,12 @@ import store from './store'
 
 Vue.config.productionTip = false
 
+// Configurations
+import "./configurations/VeeValidate";
+import "./configurations/Axios";
+// import VeeValidate from 'vee-validate';
+// Vue.use(VeeValidate);
+
 // Adding bootstrap-vue in the project
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 
