@@ -1,15 +1,17 @@
 <template>
   <div class="home">
-    <div class="row">
-      <div class="col-md-12">
-        <nav>
+    <div class="row header">
+      <div class="col-md-12 nav-bar">
+        <div>
+          <h2> Todo Dashboard </h2>
+        </div>
+        <div>
           <b-button variant="primary" @click="showModal = true">
             Add Todo
           </b-button>
-        </nav>
+        </div>
       </div>
     </div>
-    <h2> Welcome to Dashboard </h2>
     <div class="row">
       <div class="col-md-12">
         <ul class="todo-list">
@@ -67,3 +69,27 @@ export default {
   }
 }
 </script>
+
+<style>
+.todo-list {
+  list-style: none;
+  padding: 5px;
+}
+
+.todo-list li {
+  margin: 10px;
+  padding: 10px;
+  background-color: #ededed;
+  border-radius: 5px;
+}
+
+.col-md-12.nav-bar {
+  display: flex;
+  justify-content: space-between;
+}
+
+.header {
+  padding: 10px 0px;
+}
+
+</style>

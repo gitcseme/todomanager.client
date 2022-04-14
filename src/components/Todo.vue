@@ -1,7 +1,7 @@
 <template>
   <div class="todo-box">
-    <div class="row">
-      <div class="col-md-8 todo-line">
+    <div class="row" style="align-items: center">
+      <div class="col-md-8 col-sm-8 col-xs-8 todo-line">
         <div class="done-box">
           <input type="checkbox" class="form-check-input" v-model="todo.IsDone" disabled>
         </div>
@@ -21,10 +21,26 @@
         </div>
         <div v-if="!isEditing" @click="editTodo" class="description">{{ todo.description }}</div>
       </div>
-      <div class="col-md-4">
+      <div class="col-md-4 col-sm-4 col-xs-4">
         <div class="row toto-actions">
-          <button class="btn btn-primary" @click="markDone(todo)">Mark done</button>
-          <button class="btn btn-danger" @click="deleteTodo(todo)">Delete</button>
+          <!-- <button class="btn btn-outline-warning" @click="setAlarm">
+            <b-icon icon="bell-fill"></b-icon>
+          </button>
+          <button class="btn btn-primary" @click="markDone">
+            <b-icon icon="check"></b-icon>
+          </button>
+          <button class="btn btn-danger" @click="deleteTodo">
+            <b-icon icon="trash-fill" aria-hidden="true"></b-icon>
+          </button> -->
+          <div class="actions" @click="setAlarm">
+            <b-icon icon="bell-fill" variant="warning"></b-icon>
+          </div>
+          <div class="actions" @click="markDone">
+            <b-icon icon="check" variant="success"></b-icon>
+          </div>
+          <div class="actions" @click="deleteTodo">
+            <b-icon icon="trash-fill" variant="danger" aria-hidden="true"></b-icon>
+          </div>
         </div>
       </div>
     </div>
@@ -47,9 +63,11 @@ export default {
   },
   methods: {
     markDone() {
-      this.$emit('mark-done', this.todo.id);
+      console.log('mark-done...');
+      this.$emit('markDone', this.todo.id);
     },
     deleteTodo() {
+      console.log('delete-todo...');
       this.$emit('delete-todo', this.todo.id);
     },
     updateTodo() {
@@ -73,6 +91,10 @@ export default {
       this.$nextTick(() => {
         this.$refs.description.focus();
       });
+    },
+    setAlarm() {
+      console.log('set alarm...');
+      this.$emit('setAlarm', this.todo.id);
     }
   }
 }
@@ -94,7 +116,13 @@ export default {
     justify-content: flex-end;
   }
 
-  .toto-actions button {
+  .actions {
     width: auto;
   }
+
+  .actions:hover {
+    cursor: pointer;
+    background-color: cadetblue;
+  }
+
 </style>
