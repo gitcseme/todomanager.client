@@ -12,6 +12,27 @@
         </div>
       </div>
     </div>
+
+    <!-- Search -->
+    <div class="row">
+      <div class="col-md-8">
+        <b-form @submit.prevent="onSearchTodos" class="search-tools">
+          <input 
+            type="text"
+            class="form-control"
+            placeholder="Search..."
+            v-model="searchText"
+            data-vv-name="searchText"
+            data-vv-as="Search"
+            v-validate="'required|max:255'"
+          />
+          <button class="btn">
+            <b-icon icon="search"></b-icon>
+          </button>
+        </b-form>
+      </div>
+    </div>
+
     <div class="row">
       <div class="col-md-12">
         <ul class="todo-list">
@@ -42,6 +63,7 @@ export default {
     return {
       todos: [],
       showModal: false,
+      searchText: '',
     }
   },
   mounted() {
@@ -78,6 +100,18 @@ export default {
       .catch(err => {
         console.log('delete error: ', err);
       });
+    },
+    onSearchTodos() {
+      this.$validator.validateAll().then(result => {
+        if (result) {
+          TodoService.searchTodos(this.searchText).then(response => {
+            this.todos = response;
+          });
+        }
+        else {
+          console.log('invalid search...');
+        }
+      });
     }
   }
 }
@@ -111,6 +145,13 @@ export default {
 
 .actions {
   width: auto !important;
+}
+
+.search-tools {
+  margin-left: 15px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
 }
 
 </style>

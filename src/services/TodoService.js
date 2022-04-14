@@ -12,5 +12,8 @@ export default {
     },
     deleteTodo(todo) {
         return TodoApi.deleteTodo(todo);
+    },
+    searchTodos(searchText) {
+        return TodoApi.searchTodos(searchText);
     }
 }

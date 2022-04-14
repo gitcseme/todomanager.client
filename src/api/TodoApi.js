@@ -38,5 +38,12 @@ export default {
             .then(response => resolve(response.data))
             .catch(error => reject(error));
         });
+    },
+    searchTodos(searchText) {
+        return new Promise((resolve, reject) => {
+            Axios.get(todo_api + '/search?searchText=' + searchText)
+            .then(response => resolve(response.data))
+            .catch(error => reject(error));
+        });
     }
 }
