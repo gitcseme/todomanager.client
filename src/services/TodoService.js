@@ -9,5 +9,8 @@ export default {
     },
     updateTodo(todo) {
         return TodoApi.updateTodo(todo);
+    },
+    deleteTodo(todo) {
+        return TodoApi.deleteTodo(todo);
     }
 }

@@ -16,7 +16,11 @@
       <div class="col-md-12">
         <ul class="todo-list">
           <li v-for="todo in todos" :key="todo.id">
-            <Todo :todo="todo" @updateTodo="updateTodo" />
+            <Todo 
+              :todo="todo" 
+              @updateTodo="updateTodo" 
+              @deleteTodo="deleteTodo"
+            />
           </li>
         </ul>
       </div>
@@ -66,6 +70,15 @@ export default {
         console.log('update error: ', err);
       });
     },
+    deleteTodo(todo) {
+      console.log('delete todo: ', todo);
+      TodoService.deleteTodo(todo).then(response => {
+        this.loadTodos();
+      })
+      .catch(err => {
+        console.log('delete error: ', err);
+      });
+    }
   }
 }
 </script>

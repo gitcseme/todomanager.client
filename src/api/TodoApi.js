@@ -21,13 +21,20 @@ export default {
         });
     },
     updateTodo(todo) {
-        console.log('api: ', todo);
         return new Promise((resolve, reject) => {
             Axios.put(todo_api + '/' + todo.id, 
             {
                 description: todo.description,
-                isDone: todo.isDone
+                isDone: todo.isDone,
+                deadline: todo.deadline
             })
+            .then(response => resolve(response.data))
+            .catch(error => reject(error));
+        });
+    },
+    deleteTodo(todo) {
+        return new Promise((resolve, reject) => {
+            Axios.delete(todo_api + '/' + todo.id)
             .then(response => resolve(response.data))
             .catch(error => reject(error));
         });

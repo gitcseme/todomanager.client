@@ -24,8 +24,8 @@
       </div>
       <div class="col-md-4 col-sm-4 col-xs-4">
         <div class="row toto-actions">
-          <div v-if="!todo.isDone" class="actions" @click="setDeadline" title="Set deadline">
-            <b-icon icon="calendar2-event" variant="warning"></b-icon>
+          <div v-if="!todo.isDone" class="actions" @click="openDeadlinePicker = !openDeadlinePicker" title="Set deadline">
+            <b-icon icon="calendar2-event" :variant="todo.deadline ? 'success':'warning'"></b-icon>
           </div>
           <div v-if="!todo.isDone" class="actions" @click="markDone" title="Mark done">
             <b-icon icon="check" variant="success"></b-icon>
@@ -34,6 +34,31 @@
             <b-icon icon="trash-fill" variant="danger" aria-hidden="true"></b-icon>
           </div>
         </div>
+      </div>
+    </div>
+    <div v-if="openDeadlinePicker" class="row mt-2">
+      <template v-if="todo.deadline == null">
+        <div class="col-md-6">
+          <b-form-datepicker 
+            width="40%"
+            id="example-datepicker" 
+            :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }"
+            v-model="deadline" 
+            class="mb-1"
+          ></b-form-datepicker>
+        </div>
+        <div class="col">
+          <b-button 
+            :disabled="deadline == ''" 
+            variant="primary" 
+            @click="setDeadline"
+          >
+            Set deadline
+          </b-button>
+        </div>
+      </template>
+      <div v-else class="col">
+        <small style="color: gray"><span class="text-danger">Deadline:</span> {{ todo.deadline }}</small>
       </div>
     </div>
   </div>
@@ -52,6 +77,8 @@ export default {
     return {
       isEditing: false,
       editingTodoDescription: '',
+      openDeadlinePicker: false,
+      deadline: '',
     };
   },
   methods: {
@@ -61,7 +88,7 @@ export default {
     },
     deleteTodo() {
       console.log('delete-todo...');
-      this.$emit('delete-todo', this.todo.id);
+      this.$emit('deleteTodo', this.todo);
     },
     updateTodo() {
       this.$validator.validateAll().then(result => {
@@ -87,7 +114,7 @@ export default {
         this.isEditing = true;
         this.editingTodoDescription = this.todo.description;
        
-       // ensures that the v-dom has been updated before focusing the input
+        // ensures that the v-dom has been updated before focusing the input
         this.$nextTick(() => {
           this.$refs.description.focus();
         });
@@ -96,7 +123,9 @@ export default {
     },
     setDeadline() {
       console.log('set alarm...');
-      this.$emit('setDeadline', this.todo.id);
+      let time = Date.parse(this.deadline);
+      this.todo.deadline = time;
+      this.updateTodo();
     }
   }
 }
