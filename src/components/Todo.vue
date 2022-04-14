@@ -1,13 +1,14 @@
 <template>
   <div class="todo-box">
     <div class="row" style="align-items: center">
-      <div class="col-md-8 col-sm-8 col-xs-8 todo-line">
+      <div class="col-md-8 col-sm-8 col-xs-12 todo-line">
         <div class="done-box">
-          <input type="checkbox" class="form-check-input" v-model="todo.IsDone" disabled>
+          <input type="checkbox" class="form-check-input" v-model="todo.isDone" disabled>
         </div>
-        <div v-if="isEditing">
+        <div v-if="isEditing" class="editible">
           <form>
             <input 
+              width="100%"
               ref="description"
               type="text" 
               class="form-control" 
@@ -23,22 +24,13 @@
       </div>
       <div class="col-md-4 col-sm-4 col-xs-4">
         <div class="row toto-actions">
-          <!-- <button class="btn btn-outline-warning" @click="setAlarm">
-            <b-icon icon="bell-fill"></b-icon>
-          </button>
-          <button class="btn btn-primary" @click="markDone">
-            <b-icon icon="check"></b-icon>
-          </button>
-          <button class="btn btn-danger" @click="deleteTodo">
-            <b-icon icon="trash-fill" aria-hidden="true"></b-icon>
-          </button> -->
-          <div class="actions" @click="setAlarm">
-            <b-icon icon="bell-fill" variant="warning"></b-icon>
+          <div v-if="!todo.isDone" class="actions" @click="setDeadline" title="Set deadline">
+            <b-icon icon="calendar2-event" variant="warning"></b-icon>
           </div>
-          <div class="actions" @click="markDone">
+          <div v-if="!todo.isDone" class="actions" @click="markDone" title="Mark done">
             <b-icon icon="check" variant="success"></b-icon>
           </div>
-          <div class="actions" @click="deleteTodo">
+          <div class="actions" @click="deleteTodo" title="Delete todo">
             <b-icon icon="trash-fill" variant="danger" aria-hidden="true"></b-icon>
           </div>
         </div>
@@ -58,13 +50,14 @@ export default {
   },
   data() {
     return {
-      isEditing: false
+      isEditing: false,
+      editingTodoDescription: '',
     };
   },
   methods: {
     markDone() {
-      console.log('mark-done...');
-      this.$emit('markDone', this.todo.id);
+      this.todo.isDone = true;
+      this.updateTodo();
     },
     deleteTodo() {
       console.log('delete-todo...');
@@ -74,27 +67,36 @@ export default {
       this.$validator.validateAll().then(result => {
         if (result) {
           this.$emit('updateTodo', this.todo);
-          console.log('valid description...');
+          console.log('valid description...', this.todo);
+        }
+        else {
+          this.todo.description = this.editingTodoDescription;
+          console.log('invalid description...');
         }
       })
       .catch(err => {
         console.log('updating error: ', err);
+        this.todo.description = this.editingTodoDescription;
       })
       .finally(() => {
         this.isEditing = false;
       });
     },
     editTodo() {
-      this.isEditing = true;
+      if (!this.todo.isDone) {
+        this.isEditing = true;
+        this.editingTodoDescription = this.todo.description;
+       
+       // ensures that the v-dom has been updated before focusing the input
+        this.$nextTick(() => {
+          this.$refs.description.focus();
+        });
+      }
 
-      // ensures that the v-dom has been updated before focusing the input
-      this.$nextTick(() => {
-        this.$refs.description.focus();
-      });
     },
-    setAlarm() {
+    setDeadline() {
       console.log('set alarm...');
-      this.$emit('setAlarm', this.todo.id);
+      this.$emit('setDeadline', this.todo.id);
     }
   }
 }
@@ -123,6 +125,10 @@ export default {
   .actions:hover {
     cursor: pointer;
     background-color: cadetblue;
+  }
+
+  .editible {
+    width: 100%;
   }
 
 </style>

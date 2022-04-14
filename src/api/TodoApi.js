@@ -21,8 +21,13 @@ export default {
         });
     },
     updateTodo(todo) {
+        console.log('api: ', todo);
         return new Promise((resolve, reject) => {
-            Axios.put(todo_api + '/' + todo.id, todo)
+            Axios.put(todo_api + '/' + todo.id, 
+            {
+                description: todo.description,
+                isDone: todo.isDone
+            })
             .then(response => resolve(response.data))
             .catch(error => reject(error));
         });

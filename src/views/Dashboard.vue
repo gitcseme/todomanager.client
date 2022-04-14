@@ -92,4 +92,12 @@ export default {
   padding: 10px 0px;
 }
 
+.row.toto-actions {
+  display: flex;
+}
+
+.actions {
+  width: auto !important;
+}
+
 </style>
