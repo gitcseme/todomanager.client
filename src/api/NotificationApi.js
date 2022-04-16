@@ -12,5 +12,14 @@ export default {
             })
             .catch(error => reject(error));
         });
+    },
+    maskAsRead(notificationId) {
+        return new Promise((resolve, reject) => {
+            Axios.put(notification_api + '/' + notificationId + '/read')
+            .then(response => {
+                resolve(response.data);
+            })
+            .catch(error => reject(error));
+        });
     }
 }

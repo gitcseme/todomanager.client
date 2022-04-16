@@ -45,5 +45,12 @@ export default {
             .then(response => resolve(response.data))
             .catch(error => reject(error));
         });
+    },
+    getTodo(todoId) {
+        return new Promise((resolve, reject) => {
+            Axios.get(todo_api + '/' + todoId)
+            .then(response => resolve(response.data))
+            .catch(error => reject(error));
+        });
     }
 }

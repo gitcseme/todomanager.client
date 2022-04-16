@@ -15,5 +15,8 @@ export default {
     },
     searchTodos(searchText) {
         return TodoApi.searchTodos(searchText);
+    },
+    getTodo(todoId) { 
+        return TodoApi.getTodo(todoId);
     }
 }
