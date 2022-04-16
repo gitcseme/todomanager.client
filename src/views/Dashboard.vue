@@ -1,17 +1,19 @@
 <template>
   <div class="home">
     <div class="row header">
-      <div class="col-md-6">
+      <div class="col-md-5">
         <h2 class="dashboard-title"> Todo Dashboard </h2>
       </div>
-      <div class="col-md-6 header-actions mt-2">
+      <div class="col-md-7 header-actions mt-2">
+        <!-- loggedIn user info -->
+        <UserInfo />
         <div>
           <b-button variant="success" @click="showModal = true">
             <b-icon icon="plus-circle" variant="warning"></b-icon> Add Todo 
           </b-button>
         </div>
         <!-- notification -->
-        <NotificationDropdown />
+        <NotificationDropdown :key="notificationRefreshKey"/>
       </div>
     </div>
 
@@ -67,18 +69,20 @@
 <script>
 // @ is an alias to /src
 import TodoService from '@/services/TodoService';
-import Todo from '@/components/Todo';
+import Todo from '@/components/Todo.vue';
 import TodoCreateModal from '@/components/modals/TodoCreateModal.vue';
 import NotificationDropdown from '@/components/NotificationDropdown.vue';
+import UserInfo from '@/components/UserInfo.vue';
 
 export default {
   name: 'Dashboard',
-  components: { TodoCreateModal, Todo, NotificationDropdown },
+  components: { TodoCreateModal, Todo, NotificationDropdown, UserInfo },
   data() {
     return {
       todos: [],
       showModal: false,
       searchText: '',
+      notificationRefreshKey: 0,
     }
   },
   mounted() {
@@ -88,6 +92,7 @@ export default {
     onCreateTodo(description) {
       TodoService.createTodo(description).then(response => {
         this.loadTodos();
+        this.notificationRefreshKey++;
       })
       .catch(err => {
         console.log('error: ', err);

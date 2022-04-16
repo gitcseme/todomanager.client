@@ -1,7 +1,7 @@
 <template>
   <div class="row">
     <div class="col-md-6 offset-md-3">
-      <h3 class="page-header">Sign In</h3>
+      <h3 class="page-header">Sign Up</h3>
       <form @submit.prevent="onSubmit">
         <div class="form-group">
           <label for="email">Email</label>
@@ -9,7 +9,7 @@
             type="text" 
             class="form-control" 
 				    placeholder="Your email address" 
-            v-model="loginModel.email"
+            v-model="signinModel.email"
 				    data-vv-name="email" 
             data-vv-as="Email" 
             v-validate="'required|email'" 
@@ -25,7 +25,7 @@
             type="password" 
             class="form-control" 
             placeholder="Your password" 
-            v-model="loginModel.password"
+            v-model="signinModel.password"
             data-vv-name="password" 
             data-vv-as="Password" 
             v-validate="'required|min:4'" 
@@ -35,17 +35,9 @@
           </span>
         </div>
 
-        <div class="form-check">
-          <input type="checkbox" class="form-check-input" v-model="loginModel.rememberMe">
-          <label class="form-check-label">Remember me</label>
-        </div>
-        <div class="row">
-          <div class="col">
-            <button style="width:auto" type="submit" class="btn btn-primary">Sign In</button>
-            <div>
-              Don't have an account? <router-link :to="{ name: 'signup' }">Register</router-link>
-            </div>
-          </div>
+        <div class="form-group mt-4">
+          <button style="width:auto" type="submit" class="btn btn-primary">Submit</button>
+          <router-link style="float: right" :to="{ name: 'signin' }">Back to signin</router-link>
         </div>
       </form>
     </div>
@@ -59,35 +51,24 @@ export default {
   name: 'Signin',
   data () {
     return {
-      loginModel: {
-        email: null,
-        password: null,
-        rememberMe: false
-      }
+      signinModel: {
+        email: '',
+        password: '',
+      },
     }
   },
   methods: {
     onSubmit() {
       this.$validator.validateAll().then(result => {
         if (result) {
-          AccountService.signin(this.loginModel)
-          .then(response => {
-            this.$router.push('/');
+          AccountService.signup(this.signinModel).then(response => {
+            this.$router.push({ name: 'dashboard' });
           }).catch(error => {
-            console.log('login error: ', error);
+            console.log('signup error: ', error.response.data);
           });
         }
-        else {
-          console.log('Error!', this.errors);
-        }
-      })
+      });
     }
   }
 }
 </script>
-
-<style>
-.invalid-input {
-  color: #dc3545;
-}
-</style>

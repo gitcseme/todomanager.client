@@ -13,5 +13,26 @@ export default {
             })
             .catch(error => reject(error));
         });
+    },
+    getUserInfo() {
+        return new Promise((resolve, reject) => {
+            Axios.get(account_api + '/userinfo')
+            .then(response => resolve(response.data))
+            .catch(error => reject(error));
+        });
+    },
+    signout() {
+        return new Promise((resolve, reject) => {
+            Axios.post(account_api + '/signout')
+            .then(response => resolve(response.data))
+            .catch(error => reject(error));
+        });
+    },
+    signup(data) {
+        return new Promise((resolve, reject) => {
+            Axios.post(account_api + '/signup', data)
+            .then(response => resolve(response.data))
+            .catch(error => reject(error));
+        });
     }
 }

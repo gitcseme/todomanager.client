@@ -2,14 +2,15 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
+import VueCookies from 'vue-cookie'
 
 Vue.config.productionTip = false
+
+Vue.use(VueCookies);
 
 // Configurations
 import "./configurations/VeeValidate";
 import "./configurations/Axios";
-// import VeeValidate from 'vee-validate';
-// Vue.use(VeeValidate);
 
 // Adding bootstrap-vue in the project
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'

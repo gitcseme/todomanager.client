@@ -2,6 +2,8 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Dashboard from '../views/Dashboard.vue'
 import Signin from '../components/Signin.vue'
+import Signup from '../components/Signup.vue'
+import NotFound from '../components/NotFound.vue'
 
 Vue.use(VueRouter)
 
@@ -9,7 +11,7 @@ const routes = [
   {
     path: '/',
     name: 'dashboard',
-    component: Dashboard
+    component: Dashboard,
   },
   {
     path: '/about',
@@ -23,6 +25,16 @@ const routes = [
     path: '/signin',
     name: 'signin',
     component: Signin
+  },
+  {
+    path: '/signup',
+    name: 'signup',
+    component: Signup
+  },
+  // place a wildcard route at the end
+  {
+    path: '*',
+    component: NotFound
   }
 ]
 

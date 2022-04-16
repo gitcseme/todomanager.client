@@ -26,7 +26,7 @@ export default {
             {
                 description: todo.description,
                 isDone: todo.isDone,
-                deadline: todo.deadline
+                deadline: typeof(todo.deadline) === 'number' ? todo.deadline : null
             })
             .then(response => resolve(response.data))
             .catch(error => reject(error));

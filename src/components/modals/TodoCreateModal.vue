@@ -51,11 +51,18 @@ export default {
           this.$emit('input', false);
         }
       })
+      .catch(err => {
+        console.log(err);
+      })
+      .finally(() => {
+        this.description = '';
+      });
     },
     cancel() {
       this.showModal = false;
       this.$emit('input', false);
       this.$refs.todo_modal.hide();
+      this.description = '';
     },
   },
   watch: {
