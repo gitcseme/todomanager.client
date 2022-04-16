@@ -1,7 +1,7 @@
 <template>
   <div class="todo-box">
     <div class="row" style="align-items: center">
-      <div class="col-md-8 col-sm-8 col-xs-12 todo-line">
+      <div class="col-md-9 col-sm-9 col-xs-12 todo-line">
         <div class="done-box">
           <input type="checkbox" class="form-check-input" v-model="todo.isDone" disabled>
         </div>
@@ -20,17 +20,30 @@
             >
           </form>
         </div>
-        <div v-if="!isEditing" @click="editTodo" class="description">{{ todo.description }}</div>
+        <div 
+          v-if="!isEditing" 
+          @click="editTodo" 
+          class="description"
+          v-b-tooltip.hover
+          :title="todo.isDone ? 'Can\'t edit completed todo' : 'Click to edit in place'"
+        >
+          {{ todo.description }}
+        </div>
       </div>
-      <div class="col-md-4 col-sm-4 col-xs-4">
+      <div class="col-md-3 col-sm-3 col-xs-4">
         <div class="row toto-actions">
-          <div v-if="!todo.isDone" class="actions" @click="openDeadlinePicker = !openDeadlinePicker" title="Set deadline">
+          <div 
+            v-if="!todo.isDone" 
+            class="actions" 
+            @click="openDeadlinePicker = !openDeadlinePicker" 
+            v-b-tooltip.hover
+            :title="todo.deadline ? 'Open deadline' : 'Set deadline'">
             <b-icon icon="calendar2-event" :variant="todo.deadline ? 'success':'warning'"></b-icon>
           </div>
-          <div v-if="!todo.isDone" class="actions" @click="markDone" title="Mark done">
-            <b-icon icon="check" variant="success"></b-icon>
+          <div v-if="!todo.isDone" class="actions" @click="markDone" v-b-tooltip.hover title="Mark done">
+            <b-icon icon="check-circle" variant="success"></b-icon>
           </div>
-          <div class="actions" @click="deleteTodo" title="Delete todo">
+          <div class="actions" @click="deleteTodo" v-b-tooltip.hover title="Delete todo">
             <b-icon icon="trash-fill" variant="danger" aria-hidden="true"></b-icon>
           </div>
         </div>
@@ -153,7 +166,6 @@ export default {
 
   .actions:hover {
     cursor: pointer;
-    background-color: cadetblue;
   }
 
   .editible {

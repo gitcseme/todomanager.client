@@ -1,15 +1,17 @@
 <template>
   <div class="home">
     <div class="row header">
-      <div class="col-md-12 nav-bar">
+      <div class="col-md-6">
+        <h2 class="dashboard-title"> Todo Dashboard </h2>
+      </div>
+      <div class="col-md-6 header-actions mt-2">
         <div>
-          <h2> Todo Dashboard </h2>
-        </div>
-        <div>
-          <b-button variant="primary" @click="showModal = true">
-            Add Todo
+          <b-button variant="success" @click="showModal = true">
+            <b-icon icon="plus-circle" variant="warning"></b-icon> Add Todo 
           </b-button>
         </div>
+        <!-- notification -->
+        <NotificationDropdown />
       </div>
     </div>
 
@@ -33,6 +35,7 @@
       </div>
     </div>
 
+    <!-- Todos -->
     <div class="row">
       <div class="col-md-12">
         <ul class="todo-list">
@@ -46,6 +49,17 @@
         </ul>
       </div>
     </div>
+    <div v-if="todos.length === 0">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="empty-todo">
+            <b-icon icon="check-circle" size="5x" variant="success"></b-icon>
+            <h3>You have no todos or search doesn't match any todo</h3>
+            <p>Add a new todo by clicking the button above</p>
+          </div>
+        </div>
+      </div>
+    </div>
     <todo-create-modal v-model="showModal" @createTodo="onCreateTodo"/>
   </div>
 </template>
@@ -55,10 +69,11 @@
 import TodoService from '@/services/TodoService';
 import Todo from '@/components/Todo';
 import TodoCreateModal from '@/components/modals/TodoCreateModal.vue';
+import NotificationDropdown from '@/components/NotificationDropdown.vue';
 
 export default {
   name: 'Dashboard',
-  components: { TodoCreateModal, Todo },
+  components: { TodoCreateModal, Todo, NotificationDropdown },
   data() {
     return {
       todos: [],
@@ -137,6 +152,7 @@ export default {
 
 .header {
   padding: 10px 0px;
+  margin-bottom: 25px;
 }
 
 .row.toto-actions {
@@ -152,6 +168,18 @@ export default {
   width: 100%;
   display: flex;
   justify-content: space-between;
+}
+
+h2.dashboard-title {
+  font-size: 45px;
+  font-family: cursive;
+  font-weight: bold;
+}
+
+.header-actions {
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 0px !important;
 }
 
 </style>

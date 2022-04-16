@@ -25,7 +25,7 @@
             {{ errors.first('description') }}
           </span>
         </div>
-        <div class="mt-3">
+        <div class="mt-3 modal-actoin-buttons">
           <button type="submit" class="btn btn-primary">Add</button>
           <a class="btn btn-danger" @click="cancel">close</a>
         </div>
@@ -65,3 +65,9 @@ export default {
   },
 }
 </script>
+
+<style>
+.mt-3.modal-actoin-buttons {
+  float: right;
+}
+</style>
