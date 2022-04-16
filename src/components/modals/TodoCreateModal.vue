@@ -27,7 +27,7 @@
         </div>
         <div class="mt-3 modal-actoin-buttons">
           <button type="submit" class="btn btn-primary">Add</button>
-          <a class="btn btn-danger" @click="cancel">close</a>
+          <a class="btn btn-danger" style="margin-left: 2px" @click="cancel">close</a>
         </div>
       </b-form>
     </b-modal>

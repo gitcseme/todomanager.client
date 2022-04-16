@@ -73,12 +73,10 @@ export default {
           AccountService.signin(this.loginModel)
           .then(response => {
             this.$router.push('/');
-          }).catch(error => {
-            console.log('login error: ', error);
+          })
+          .catch(error => {
+            console.log('login error: ', error.response.data);
           });
-        }
-        else {
-          console.log('Error!', this.errors);
         }
       })
     }

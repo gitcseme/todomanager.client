@@ -7,7 +7,7 @@
         </div>
         <div v-if="isEditing" class="editible">
           <form>
-            <input 
+            <textarea 
               width="100%"
               ref="description"
               type="text" 
@@ -17,7 +17,7 @@
               data-vv-name="description"
               data-vv-as="Description"
               v-validate="'required|max:255'"
-            >
+            />
           </form>
         </div>
         <div 
@@ -107,11 +107,10 @@ export default {
       this.$validator.validateAll().then(result => {
         if (result) {
           this.$emit('updateTodo', this.todo);
-          console.log('valid description...', this.todo);
+          this.openDeadlinePicker = false;
         }
         else {
           this.todo.description = this.editingTodoDescription;
-          console.log('invalid description...');
         }
       })
       .catch(err => {
@@ -132,10 +131,8 @@ export default {
           this.$refs.description.focus();
         });
       }
-
     },
     setDeadline() {
-      console.log('set alarm...');
       let time = Date.parse(this.deadline);
       this.todo.deadline = time;
       this.updateTodo();

@@ -28,7 +28,7 @@
             v-model="searchText"
             data-vv-name="searchText"
             data-vv-as="Search"
-            v-validate="'required|max:255'"
+            v-validate="'max:255'"
           />
           <button class="btn">
             <b-icon icon="search"></b-icon>
@@ -131,6 +131,9 @@ export default {
         else {
           console.log('invalid search...');
         }
+      })
+      .catch(err => {
+        console.log('search error: ', err);
       });
     }
   }
